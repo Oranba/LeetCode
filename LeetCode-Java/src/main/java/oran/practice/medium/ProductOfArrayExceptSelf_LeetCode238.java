@@ -28,25 +28,36 @@ The input is generated such that answer[i] is guaranteed to fit in a 32-bit inte
 public class ProductOfArrayExceptSelf_LeetCode238 {
 
     // Solution guarantee Time Complexity of O(n)
-    public int[] Solution(int[] input){
-        int length = input.length;
-        int[] left = new int[length];
-        int[] right = new int[length];
+    public int[] Solution(int[] nums){
+        int length = nums.length;
         int[] result = new int[length];
+        //Solution 1:
+       /* int[] left = new int[length];
+        int[] right = new int[length];
 
         left[0] = 1;
         right[length-1] = 1;
 
         //left
         for(int i=1;i<length;i++){
-            left[i] = input[i-1]*left[i-1];
+            left[i] = nums[i-1]*left[i-1];
         }
         //right
         for(int i=length-2;i>=0;i--){
-            right[i] = input[i+1]*right[i+1];
+            right[i] = nums[i+1]*right[i+1];
         }
         for(int i=0;i<length;i++){
             result[i] = left[i]*right[i];
+        }*/
+        //Solution 2: using only one array for result computation
+        result[0]=1;
+        for(int i=1; i<length; i++){
+            result[i] =result[i-1]*nums[i-1];
+        }
+        int suffix =1;
+        for(int i=length-1;i>=0;i--){
+            result[i] = result[i]*suffix;
+            suffix = suffix*nums[i];
         }
         return result;
     }
